@@ -58,7 +58,10 @@ history_file = "experiment_log.json"
 
 if os.path.exists(history_file):
     with open(history_file, "r") as f:
-        history = json.load(f)
+        try:
+            history = json.load(f)
+        except json.JSONDecodeError:
+            history = []
 else:
     history = []
 

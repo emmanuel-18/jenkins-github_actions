@@ -1,0 +1,11 @@
+[
+  {
+    "timestamp": "2026-05-03T22:22:31.442494",
+    "models": {
+      "LogisticRegression": 1.0,
+      "DecisionTree": 1.0
+    },
+    "best_model": "LogisticRegression",
+    "best_accuracy": 1.0
+  }
+]
