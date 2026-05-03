@@ -22,9 +22,9 @@ pipeline {
             }
         }
 
-        stage('Archive Results') {
+        stage('Archive Artifacts') {
             steps {
-                archiveArtifacts artifacts: 'results.json', fingerprint: true
+                archiveArtifacts artifacts: 'model.pkl, metrics.json', fingerprint: true
             }
         }
     }
