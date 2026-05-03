@@ -32,6 +32,7 @@ pipeline {
             steps {
                 bat 'pip install fastapi uvicorn'
                 bat 'start /B uvicorn app:app --host 0.0.0.0 --port 8000'
+            }
         }
     }
 }
