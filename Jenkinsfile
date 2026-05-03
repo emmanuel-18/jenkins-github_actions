@@ -10,7 +10,7 @@ pipeline {
 
         stage('Run') {
             steps {
-                echo 'Pipeline from GitHub working!'
+                echo 'Webhook test working!'
             }
         }
     }
