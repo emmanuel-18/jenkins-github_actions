@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-        stage('Train Model') {
+        stage('Train + Compare Models') {
             steps {
                 bat 'python train.py'
             }
@@ -24,7 +24,7 @@ pipeline {
 
         stage('Archive Artifacts') {
             steps {
-                archiveArtifacts artifacts: 'model.pkl, metrics.json', fingerprint: true
+                archiveArtifacts artifacts: 'best_model.pkl, experiment_results.json', fingerprint: true
             }
         }
     }

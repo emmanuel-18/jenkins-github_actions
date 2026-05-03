@@ -2,43 +2,54 @@ import json
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 import joblib
 
-print("Step 1: Loading dataset")
-
+print("Loading dataset...")
 data = load_iris()
 X = data.data
 y = data.target
-
-print("Step 2: Splitting data")
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-print("Step 3: Training model")
-
-model = LogisticRegression(max_iter=200)
-model.fit(X_train, y_train)
-
-print("Step 4: Evaluating model")
-
-accuracy = model.score(X_test, y_test)
-
-print(f"Accuracy = {accuracy:.2f}")
-
-print("Step 5: Saving model and metrics")
-
-# Save model
-joblib.dump(model, "model.pkl")
-
-# Save metrics
-metrics = {
-    "model": "LogisticRegression",
-    "accuracy": accuracy
+models = {
+    "LogisticRegression": LogisticRegression(max_iter=200),
+    "DecisionTree": DecisionTreeClassifier()
 }
 
-with open("metrics.json", "w") as f:
-    json.dump(metrics, f)
+results = {}
 
-print("Done")
+best_model_name = None
+best_accuracy = 0
+
+print("Training models...")
+
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    preds = model.predict(X_test)
+    acc = accuracy_score(y_test, preds)
+
+    print(f"{name} accuracy: {acc:.4f}")
+
+    results[name] = acc
+
+    if acc > best_accuracy:
+        best_accuracy = acc
+        best_model_name = name
+        joblib.dump(model, "best_model.pkl")
+
+print("Saving results...")
+
+output = {
+    "models": results,
+    "best_model": best_model_name,
+    "best_accuracy": best_accuracy
+}
+
+with open("experiment_results.json", "w") as f:
+    json.dump(output, f)
+
+print("Done.")
