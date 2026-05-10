@@ -23,3 +23,6 @@ NEW:
 https://new-url.ngrok-free.dev/github-webhook/
 
 Otherwise GitHub pushes will stop triggering Jenkins.
+
+
+must end with github-webhook/
