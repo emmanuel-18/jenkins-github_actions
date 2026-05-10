@@ -27,11 +27,22 @@ pipeline {
                 archiveArtifacts artifacts: 'best_model.pkl, experiment_log.json', fingerprint: true
             }
         }
-        
-        stage ('Deploy Model API') {
+
+        stage('Deploy Model API') {
             steps {
                 bat 'pip install fastapi uvicorn'
                 bat 'start /B uvicorn app:app --host 0.0.0.0 --port 8000'
+                bat 'timeout /t 5'
+            }
+        }
+
+        stage('Test API') {
+            steps {
+                bat '''
+                curl -X POST http://localhost:8000/predict ^
+                -H "Content-Type: application/json" ^
+                -d "{\"features\": [5.1, 3.5, 1.4, 0.2]}"
+                '''
             }
         }
     }
