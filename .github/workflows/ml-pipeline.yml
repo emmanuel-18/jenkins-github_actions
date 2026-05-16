@@ -28,7 +28,6 @@ jobs:
 
       - name: Validate training output
         run: |
-          python -c "
-      import os; \
-      assert os.path.exists('best_model.pkl'), 'Model not created!'; \
-      print('Model exists ✔')"
+          python -c "import os; \
+          assert os.path.exists('best_model.pkl'), 'Model not created!'; \
+          print('Model exists ✔')"
