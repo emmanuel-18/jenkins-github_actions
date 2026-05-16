@@ -23,4 +23,13 @@ jobs:
 
       - name: Run training script
         run: |
-          python train.py
+          echo "Running training script..."
+          python -u train.py
+
+      - name: Validate training output
+        run: |
+          python -c "
+      import os
+      assert os.path.exists('best_model.pkl'), 'Model not created!'
+      print('Model exists ✔')
+      "
